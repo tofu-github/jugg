@@ -203,7 +203,7 @@
             <ul class="sidebar-nav">
                 <!--<li class="sidebar-nav-heading">Components <span class="sidebar-nav-heading-info"> 附加组件</span></li>-->
                 <li class="sidebar-nav-link">
-                    <a href="index.html" class="active">
+                    <a href="javascript:;" target_page="test.html" class="active">
                         <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
                     </a>
                 </li>
@@ -251,13 +251,13 @@
                     </ul>
                 </li>
                 <li class="sidebar-nav-link">
-                    <a href="sign-up.html">
+                    <a href="../login/sign-up.html">
                         <i class="am-icon-clone sidebar-nav-link-logo"></i> 注册
                         <span class="am-badge am-badge-secondary sidebar-nav-link-logo-ico am-round am-fr am-margin-right-sm">6</span>
                     </a>
                 </li>
                 <li class="sidebar-nav-link">
-                    <a href="login.html">
+                    <a href="../login/login.html">
                         <i class="am-icon-key sidebar-nav-link-logo"></i> 登录
                     </a>
                 </li>
@@ -270,12 +270,54 @@
         </div>
     </div>
     <div class="tpl-content-wrapper">
-        123
     </div>
     <script src="assets/js/amazeui.min.js"></script>
     <script src="assets/js/amazeui.datatables.min.js"></script>
     <script src="assets/js/dataTables.responsive.min.js"></script>
-    <script src="assets/js/app.js"></script>
 </body>
+<script>
+$(function () {
+    $(".sidebar-nav-link a").bind("click",function () {
+        var item = $(this);
+        $.get(item.attr("target_page"),function (data, status) {
+            console.log(data);
+            $(".tpl-content-wrapper").html(data);
+        });
+    })
+});
 
+$(function() {
+    autoLeftNav();
+    $(window).resize(function() {
+        autoLeftNav();
+        console.log($(window).width())
+    });
+});
+
+// 侧边菜单开关
+function autoLeftNav() {
+    $('.tpl-header-switch-button').on('click', function() {
+        if ($('.left-sidebar').is('.active')) {
+            if ($(window).width() > 1024) {
+                $('.tpl-content-wrapper').removeClass('active');
+            }
+            $('.left-sidebar').removeClass('active');
+        } else {
+
+            $('.left-sidebar').addClass('active');
+            if ($(window).width() > 1024) {
+                $('.tpl-content-wrapper').addClass('active');
+            }
+        }
+    })
+
+    if ($(window).width() < 1024) {
+        $('.left-sidebar').addClass('active');
+    } else {
+        $('.left-sidebar').removeClass('active');
+    }
+}
+
+
+</script>
 </html>
